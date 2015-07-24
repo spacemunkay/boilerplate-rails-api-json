@@ -55,8 +55,10 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  namespace :api do
-    scope module: :v1 do
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      #TODO: Remove me
+      get 'example' => 'example#example'
     end
   end
 end
