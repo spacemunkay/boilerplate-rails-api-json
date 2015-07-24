@@ -15,7 +15,7 @@ Devise.setup do |config|
   config.mailer_sender = "donotreply@#{APP_NAME.downcase}.com"
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'ConfirmationMailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
