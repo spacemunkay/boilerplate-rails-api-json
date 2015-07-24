@@ -9,11 +9,17 @@ gem 'spring', :group => :development
 
 gem 'pg'
 
+# For authentication
+gem 'devise'
+
+# To use token auth (devise no longer supports)
+gem 'simple_token_authentication'
+
 # To use ActiveModel has_secure_password
- gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt', '~> 3.1.7'
 
 # Use for building JSON
-gem 'active_model_serializers'
+#gem 'active_model_serializers'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
