@@ -52,4 +52,7 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  # Clear out test mail between all tests
+  config.before(:each) { ActionMailer::Base.deliveries.clear }
 end
