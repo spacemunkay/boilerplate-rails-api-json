@@ -6,8 +6,9 @@ Users are required to register and confirm their email address.  Once registered
 
 ## What's Added
 * Rspec preconfigured w/ FactoryGirl.
-* Rspec integration tests for User Registration, Confirmation, and Login.
+* Rspec integration tests for User Registration, Confirmation, Login, & Logout.
 * API Versioning via requests, aka, 'api/v1/...' & ability to specify version in request headers if enabled.
+* Added functionality such that logging out invalidates an auth token.
 * Yea, it's not too much yet, but every bit counts.
 
 ## Thanks
