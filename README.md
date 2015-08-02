@@ -14,6 +14,9 @@ Users are required to register and confirm their email address.  Once registered
 ## Thanks
 Made from the following tutorials: <https://github.com/thoulike/rails-api-authentication-token-example>,<http://apionrails.icalialabs.com/book/chapter_two>. Thanks!
 
+## Status
+![](https://codeship.com/projects/af873400-1b80-0133-1262-5e80c3fb6dd5/status?branch=master)
+
 # Getting started
 1. Update `APP_NAME` in `config/application.rb` to your project name.
 1. Execute `init_rvm.rb <PROJECT_NAME>` to create rvm files
