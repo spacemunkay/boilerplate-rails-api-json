@@ -1,0 +1,13 @@
+db:
+  image: postgres
+  ports:
+    - "5432"
+web:
+  build: .
+  #command: bundle exec rake db:migrate
+  volumes:
+    - .:/boilerplate-rails-api-json
+  ports:
+    - "8080:3000"
+  links:
+    - db

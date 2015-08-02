@@ -1,9 +1,11 @@
 development: &default
   adapter: postgresql
-  host: 127.0.0.1
-  username: rails_api_development
+  encoding: unicode
+  database: postgres
+  pool: 5
+  username: postgres
   password:
-  database: rails_api
+  host: db
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
