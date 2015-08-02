@@ -16,5 +16,5 @@ db_config.each do |env, config|
   puts `createuser -d -P #{user}`
 
   puts "Creating database '#{db}'"
-  puts `createdb -U #{user} --owner=#{user} #{config['database']}`
+  puts `createdb --owner=#{user} #{config['database']}`
 end
