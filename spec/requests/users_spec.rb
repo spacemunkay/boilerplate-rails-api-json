@@ -116,15 +116,25 @@ context "User Sign Out (Renew Token)" do
       end
 
       it "invalidates the old auth token" do
-        pending
-        #TODO find a way to invalidate old token
-        # headers = { format: :json,"X-User-Token" => @auth_token, "X-User-Email" => user.email}
-        # put 'api/v1/users/sign_in', nil, headers
+        #Sign out
+        headers = { format: :json,"X-User-Token" => @auth_token, "X-User-Email" => user.email}
+        delete 'api/v1/users/sign_out', nil, headers
 
+        # Attempt an action using the old auth token
         headers = { format: :json,
                     "X-User-Token" => @auth_token,
                     "X-User-Email" => user.email}
         get "api/v1/example", nil, headers
+        expect(response.code.to_i).to eql 401
+        json_response = JSON.parse(response.body)
+        expect(json_response["error"]).
+          to eql "You need to sign in or sign up before continuing."
+      end
+    end
+
+    context "when not signed in" do
+      it 'returns a 401' do
+        delete 'api/v1/users/sign_out', nil, headers
         expect(response.code.to_i).to eql 401
       end
     end

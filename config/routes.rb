@@ -55,7 +55,10 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  devise_for :users, path_prefix: "api/v1", defaults: { format: 'json' }
+  devise_for :users,
+            path_prefix: "api/v1",
+            defaults: { format: 'json' },
+            controllers: { sessions: 'api/v1/sessions' }
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
