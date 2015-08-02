@@ -17,7 +17,20 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 # Getting started
 1. Update `APP_NAME` in `config/application.rb` to your project name.
 1. Execute `init_rvm.rb <PROJECT_NAME>` to create rvm files
-1. Update `config/database.yml` with desired settings.
+1. Update `config/database.yml` with desired settings. (Defaulted to Docker Compose configuration)
+
+# Running with Docker (recommended)
+1. These instructions haven't been tests, please provide corrections!
+1. For Mac & Windows install Boot2docker <http://boot2docker.io/>
+1. If not installed with Boot2docker, install Docker <https://docs.docker.com/installation/>
+1. Install Docker Compose <https://docs.docker.com/compose/install/>
+1. Execute `docker-compose run web rake db:migrate`
+1. Execute `docker-compose build`
+1. Execute `docker-compose up`
+1. If using Boot2docker, execute `boot2docker ip` to get the IP to use when making requests to the Rails server.
+1. Test the Rails server is running with `curl $(boot2docker ip):8080/api/v1/example`
+
+# Running locally
 1. Install postgres (see instructions below)
 1. Create users and databases using `./init_pg_db.rb` (it uses database.yml)
 
