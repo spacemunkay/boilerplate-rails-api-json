@@ -42,3 +42,4 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 1. `brew install postgres`
 1. First time db initialization `initdb /usr/local/var/postgres -E utf8`
 1. Start Postgres `pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start`
+
