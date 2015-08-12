@@ -1,11 +1,11 @@
 development: &default
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV['RDS_DB_NAME'] %>
+  database: <%= ENV['RDS_DB_NAME'] || 'postgres' %>
   pool: 5
-  username: <%= ENV['RDS_USERNAME'] %>
+  username: <%= ENV['RDS_USERNAME'] || 'postgres' %>
   password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
+  host: <%= ENV['RDS_HOSTNAME'] || 'db' %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
