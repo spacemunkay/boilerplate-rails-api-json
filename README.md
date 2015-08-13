@@ -24,9 +24,9 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 
 # Running with Docker (recommended)
 1. These instructions haven't been tests, please provide corrections!
-1. For Mac & Windows install Boot2docker <http://boot2docker.io/>
-1. If not installed with Boot2docker, install Docker <https://docs.docker.com/installation/>
-1. Install Docker Compose <https://docs.docker.com/compose/install/>
+1. For Mac & Windows install Docker Toolbox <https://www.docker.com/toolbox>  (or Boot2docker <http://boot2docker.io/>)
+1. If not installed with Docker Toolbox or Boot2docker, install Docker <https://docs.docker.com/installation/>
+1. If not installed with Docker Toolbox, then install Docker Compose <https://docs.docker.com/compose/install/>
 1. Execute `docker-compose run web rake db:migrate`
 1. Execute `docker-compose build`
 1. Execute `docker-compose up`
