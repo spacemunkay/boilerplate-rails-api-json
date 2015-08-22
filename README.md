@@ -57,15 +57,15 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 
 ### Setting up AWS EB
 1. Create a new AWS Access Key. See [documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html). *NOTE:* You'll need these credentials later to configure Codeship.
-1. Create a 'User Policy' for the User created in the previous step.  Creating a custom inline policy is likely the easiest.  Set the policy to the following: <.aws/codeship_permissions.json>. *NOTE:* These permissions will work but are too permissive and should be narrowed to only apply to the necessary resources ASAP.  PRs welcome to improve the example policy.
+1. Create a 'User Policy' for the User created in the previous step.  Creating a custom inline policy is likely the easiest.  Set the policy to the [following](.aws/codeship_permissions.json). *NOTE:* These permissions will work but are too permissive and should be narrowed to only apply to the necessary resources ASAP.  PRs welcome to improve the example policy.
 1. Create a new AWS Elastic Beanstalk application: select a name, select 'Create web server', select Generic 'Docker' platform, select 'single instance', select 'Sample Application', make up a environment name, select 'create RDS DB Instance'.
 1. Make an EC2 key pair if you haven't already. See [documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair).  Refresh key pair list if necessary and select your key pair. Leave other options as default.
 1. Skip making Environment tags.
 1. Select postgres as DB engine for RDS Configuration, create secure username and password for you database. Leave other options as default.
 1. Select aws-elasticbeanstalk-ec2-role as your instance profile.  Allow creating a new aws-elasticbeanstalk-service-role.
 1. Launch your application.  You can continue configuration while you wait for it to launch.
-1. Select 'Configuration', select 'Software Configuration', add the following environment variables from <config/database.yml> with their correct values.
-1. Note that <.ebextensions/02.migrations.config> is used automatically by AWS to run migrations on deployment.  You can add your own scripts too.
+1. Select 'Configuration', select 'Software Configuration', add the following environment variables from [database.yml](config/database.yml) with their correct values.
+1. Note that this [script](.ebextensions/02.migrations.config) is used automatically by AWS EB to run migrations on deployment.  You can add your own scripts too.
 
 ### Setting up Codeship
 1. Setup CI with CodeShip (see section above)
