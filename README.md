@@ -10,7 +10,7 @@ Users are required to register and confirm their email address.  Once registered
 * API Versioning via requests, aka, 'api/v1/...' & ability to specify version in request headers if enabled.
 * Added functionality such that logging out invalidates an auth token.
 * Provided Dockerfile for easy developer setup and deployment.
-* Provided scripts and configuration files for deployment to [AWS ElasticBeanstalk](https://aws.amazon.com/elasticbeanstalk/)
+* Provided scripts, configuration files, and instructions for deployment to [AWS ElasticBeanstalk](https://aws.amazon.com/elasticbeanstalk/)
 
 ## Thanks
 Made from the following tutorials: <https://github.com/thoulike/rails-api-authentication-token-example>,<http://apionrails.icalialabs.com/book/chapter_two>. Thanks!
@@ -18,7 +18,7 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 ## Status
 ![](https://codeship.com/projects/af873400-1b80-0133-1262-5e80c3fb6dd5/status?branch=master)
 
-# Getting started
+# Starting a new fork
 1. Update `APP_NAME` in `config/application.rb` to your project name.
 1. Execute `init_rvm.rb <PROJECT_NAME>` to create rvm files
 1. Update `config/database.yml` with desired settings. (Defaulted to Docker Compose configuration)
@@ -39,7 +39,7 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 1. Create users and databases using `./init_pg_db.rb` (it uses database.yml)
 1. Run `bundle exec rake db:create db:migrate`
 1. Run `bundle exec rails s`
-1. Test with `curl localhost:3000/api/v1/example`. You should get a 'You need to sign in response'.
+1. Test with `curl localhost:3000/api/v1/example`. You should get a 'You need to sign in' response.
 
 # Postgres 9.2 Mac OSX Install
 1. Install homebrew `ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"`
@@ -50,10 +50,31 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 # Configuring Continuous Integration with Codeship
 1. Start an account with <https://codeship.com>, create a project and link it to your github/bitbucket account.
 1. Add `./scripts/setup_test.sh` as a test setup command.
+1. Add `bundle exec rspec` as the test pipeline command.
 1. Push to your configured branch to run CI tests!
 
-# Configuring with Codeship and AWS Elastic Beanstalk
-1. TBD
+# Configuring Continuous Deployment with Codeship and AWS Elastic Beanstalk
+
+### Setting up AWS EB
+1. Create a new AWS Access Key. See [documentation](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html). *NOTE:* You'll need these credentials later to configure Codeship.
+1. Create a 'User Policy' for the User created in the previous step.  Creating a custom inline policy is likely the easiest.  Set the policy to the following: <.aws/codeship_permissions.json>. *NOTE:* These permissions will work but are too permissive and should be narrowed to only apply to the necessary resources ASAP.  PRs welcome to improve the example policy.
+1. Create a new AWS Elastic Beanstalk application: select a name, select 'Create web server', select Generic 'Docker' platform, select 'single instance', select 'Sample Application', make up a environment name, select 'create RDS DB Instance'.
+1. Make an EC2 key pair if you haven't already. See [documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair).  Refresh key pair list if necessary and select your key pair. Leave other options as default.
+1. Skip making Environment tags.
+1. Select postgres as DB engine for RDS Configuration, create secure username and password for you database. Leave other options as default.
+1. Select aws-elasticbeanstalk-ec2-role as your instance profile.  Allow creating a new aws-elasticbeanstalk-service-role.
+1. Launch your application.  You can continue configuration while you wait for it to launch.
+1. Select 'Configuration', select 'Software Configuration', add the following environment variables from <config/database.yml> with their correct values.
+1. Note that <.ebextensions/02.migrations.config> is used automatically by AWS to run migrations on deployment.  You can add your own scripts too.
+
+### Setting up Codeship
+1. Setup CI with CodeShip (see section above)
+1. Create a branch for deployment. i.e. `git checkout -b deploy`
+1. Setup a deployment pipeline in Codeship, and select Amazon Elastic Beanstalk.
+1. Create an S3 bucket if you don't already have one, make a directory to store your builds, and set the path on the Codeship configuration page.  i.e. `mybucketname/my-boilerplate-rails-api-json-directory`. See [documentation](http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). *NOTE:* Make sure your S3 instance is under the same region as your Elastic Beanstalk service!
+1. Copy AWS access key info from the `Setting up AWS EB` section to the Codeship config page.
+1. Fill out the rest of the config page and submit.
+1. Push to your configured branch, your app should deploy.  Check the Codeship and AWS EB dashboard for error messages.
 
 # Syncing after forking
 The expectation is that you'll fork this template to make your own project and will potentially need to sync using the following procedure: <https://help.github.com/articles/syncing-a-fork/>
