@@ -19,7 +19,7 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 ![](https://codeship.com/projects/af873400-1b80-0133-1262-5e80c3fb6dd5/status?branch=master)
 
 # Starting a new fork
-1. Update `APP_NAME` in `config/application.rb` to your project name.
+1. Update `APP_NAME` in `config/application.rb` to your project name. Don't forget to change the module name too.
 1. Execute `init_rvm.rb <PROJECT_NAME>` to create rvm files
 1. Update `config/database.yml` with desired settings. (Defaulted to Docker Compose configuration)
 
@@ -74,7 +74,7 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 1. Create an S3 bucket if you don't already have one, make a directory to store your builds, and set the path on the Codeship configuration page.  i.e. `mybucketname/my-boilerplate-rails-api-json-directory`. See [documentation](http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). *NOTE:* Make sure your S3 instance is under the same region as your Elastic Beanstalk service!
 1. Copy AWS access key info from the `Setting up AWS EB` section to the Codeship config page.
 1. Fill out the rest of the config page and submit.
-1. Push to your configured branch, your app should deploy.  Check the Codeship and AWS EB dashboard for error messages.
+1. Push to your configured branch, your app should deploy.  Check the Codeship and AWS EB dashboard for error messages. *NOTE:* I've had issues with non-descriptive error messages on initial deploys.  However, I resolved this by manually uploading the .zip file created by Codeship (and saved on your configured S3 bucket) directly to the AWS EB application using the AWS Web GUI. Afterward, Codeship deploys successfully from then on.
 
 # Syncing after forking
 The expectation is that you'll fork this template to make your own project and will potentially need to sync using the following procedure: <https://help.github.com/articles/syncing-a-fork/>
