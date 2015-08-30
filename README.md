@@ -64,6 +64,7 @@ This will return an `authentication_token` which you will set as the `X-User-Tok
 1. Update `config/database.yml` with desired settings. (Defaulted to Docker Compose configuration)
 
 # Running with Docker (recommended)
+### Setup
 1. These instructions haven't been tests, please provide corrections!
 1. For Mac & Windows install Docker Toolbox <https://www.docker.com/toolbox>  (or Boot2docker <http://boot2docker.io/>)
 1. If not installed with Docker Toolbox or Boot2docker, install Docker <https://docs.docker.com/installation/>
@@ -73,6 +74,24 @@ This will return an `authentication_token` which you will set as the `X-User-Tok
 1. Execute `docker-compose up`
 1. If using Docker Toolbox, use `docker-machine ip default` to get the IP.  If using Boot2docker, execute `boot2docker ip` to get the IP to use when making requests to the Rails server.
 1. Test the Rails server is running with `curl <INSERT IP>:8080/api/v1/example`.  You should get `{"error":"You need to sign in or sign up before continuing."}` as a response.
+
+### Developer Workflow
+The project directory should already be mounted inside the container, so you should be able to make live changes. However, since the project is running in the 'web' container, you need to prepend commands with `docker-compose run web`.
+
+You'll likely want to add the following aliases:
+```
+alias dm='docker-machine'
+alias dc='docker-compose'
+alias dcrw='docker-compose run web'
+```
+
+That way your commands can be shortened to:
+```
+dcrw rake routes
+dcrw rspec
+```
+If there's a better way, I'm all ears.
+
 
 # Running locally
 1. Install postgres (see instructions below)
