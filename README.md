@@ -1,8 +1,5 @@
 # About
-Boilerplate for a RESTful JSON rails-api using Postgres.  The goal is to create a template for most APIs such that only the domain specific models & logic need to be added.
-
-## Authentication Procedure
-Users are required to register and confirm their email address.  Once registered, upon login they receive a token that can be sent in the headers of future requests for authorization.  Once issued, the token does not change, however I plan on adding the ability for a user to renew their token.  See `spec/requests/users_spec.rb` for details.
+Boilerplate for a RESTful JSON rails-api using Postgres.  The goal is to create a template for most APIs such that only the domain specific models & logic need to be added.  It also acts as a minimum deployable system if you use AWS.
 
 ## What's Added
 * Rspec preconfigured w/ FactoryGirl.
@@ -17,6 +14,49 @@ Made from the following tutorials: <https://github.com/thoulike/rails-api-authen
 
 ## Status
 ![](https://codeship.com/projects/af873400-1b80-0133-1262-5e80c3fb6dd5/status?branch=master)
+
+## Authentication Procedure
+Users are required to register and confirm their email address.  Once registered, upon login they receive a token that can be sent in the headers of future requests for authorization.  Once issued, the token does not change.  A new token is generated on sign out and can be obtained by signing in again.  See `spec/requests/users_spec.rb` for details.
+
+Use your favorite [HTTP Client](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop) to generate the following requests:
+
+### User Registration
+```
+  POST /api/v1/users HTTP/1.1
+  Host: 192.168.99.100:8080
+  Content-Type: application/json
+  Cache-Control: no-cache
+
+  { "user" : { "email" : "myemail@gmail.com", "password" : "mybadpassword" }}
+```
+
+### User Confirmation
+Depending on how you have configured email deliveries, you should get an email with a confirmation link.  By default, the email is printed in the server logs.
+
+The link should look like the following:
+`http://192.168.99.100:8080/api/v1/users/confirmation?confirmation_token=ZxvbZx3smFTFnFjm8AYA`
+
+### User Sign In
+```
+  POST /api/v1/users/sign_in HTTP/1.1
+  Host: 192.168.99.100:8080
+  Content-Type: application/json
+  Cache-Control: no-cache
+
+  { "user" : { "email" : "myemail@gmail.com", "password" : "mybadpassword" }}
+```
+
+This will return an `authentication_token` which you will set as the `X-User-Token` header in future requests.
+
+### Example Authenticated Request
+```
+  GET /api/v1/example HTTP/1.1
+  Host: 192.168.99.100:8080
+  Content-Type: application/json
+  X-User-Token: fXue2vifDPbxJ1v-n3c1
+  X-User-Email: myemail@gmail.com
+  Cache-Control: no-cache
+```
 
 # Starting a new fork
 1. Update `APP_NAME` in `config/application.rb` to your project name. Don't forget to change the module name too.
